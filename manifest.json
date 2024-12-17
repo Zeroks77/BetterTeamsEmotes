@@ -4,7 +4,8 @@
   "version": "1.0",
   "description": "Use BetterTTV emotes in Microsoft Teams",
   "permissions": [
-    "clipboardWrite"
+    "clipboardWrite",
+    "clipboardRead"
   ],
   "host_permissions": [
     "https://api.betterttv.net/*",

@@ -37,23 +37,63 @@ async function loadEmojiGGEmotes() {
   }
 }
 
-// Initialize
-window.addEventListener('DOMContentLoaded', async () => {
-  console.log('Loading emotes...');
-  const [bttvData, emojiggData] = await Promise.all([
-    loadBTTVEmotes(),
-    loadEmojiGGEmotes()
-  ]);
-  
-  bttvEmotes = [...bttvData, ...emojiggData];
-  console.log('Total emotes loaded:', bttvEmotes.length);
-  
-  if (bttvEmotes.length > 0) {
-    renderEmotes(bttvEmotes);
-  } else {
-    document.querySelector('.emote-grid').innerHTML = 'Failed to load emotes :(';
+async function copyEmote(emote) {
+  try {
+    // Create an img element to get the image data
+    const img = document.createElement('img');
+    img.crossOrigin = 'anonymous'; // Enable CORS
+    
+    // Wait for image to load
+    await new Promise((resolve, reject) => {
+      img.onload = resolve;
+      img.onerror = reject;
+      img.src = emote.url;
+    });
+    
+    // Create canvas to handle the image
+    const canvas = document.createElement('canvas');
+    canvas.width = img.naturalWidth;
+    canvas.height = img.naturalHeight;
+    
+    // Draw image to canvas
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(img, 0, 0);
+    
+    // Get image as blob
+    const blob = await new Promise(resolve => {
+      canvas.toBlob(resolve, 'image/png');
+    });
+    
+    // Copy to clipboard
+    try {
+      await navigator.clipboard.write([
+        new ClipboardItem({
+          'image/png': blob
+        })
+      ]);
+      showNotice('Emote copied!', true);
+    } catch (clipboardError) {
+      // Fallback: try to copy element directly
+      document.body.appendChild(img);
+      const range = document.createRange();
+      range.selectNode(img);
+      const selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(range);
+      const success = document.execCommand('copy');
+      document.body.removeChild(img);
+      
+      if (success) {
+        showNotice('Emote copied! (fallback)', true);
+      } else {
+        throw new Error('Fallback copy failed');
+      }
+    }
+  } catch (error) {
+    console.error('Copy failed:', error);
+    showNotice('Failed to copy emote', false);
   }
-});
+}
 
 // Update renderEmotes to handle source filtering
 function renderEmotes(emotes) {
@@ -96,25 +136,6 @@ function renderEmotes(emotes) {
   });
 }
 
-async function copyEmote(emote) {
-  try {
-    const response = await fetch(emote.url);
-    const blob = await response.blob();
-    const isGif = blob.type === 'image/gif' || emote.url.toLowerCase().endsWith('.gif');
-    
-    await navigator.clipboard.write([
-      new ClipboardItem({
-        [isGif ? 'image/gif' : 'image/png']: blob
-      })
-    ]);
-    
-    showNotice(`${isGif ? 'GIF' : 'Image'} copied!`, true);
-  } catch (error) {
-    console.error('Copy failed:', error);
-    showNotice('Failed to copy emote', false);
-  }
-}
-
 function showNotice(message, success) {
   const notice = document.querySelector('.copy-notice');
   notice.textContent = message;
@@ -123,30 +144,44 @@ function showNotice(message, success) {
   setTimeout(() => notice.style.display = 'none', 1500);
 }
 
-// Simple search handler
-document.querySelector('.search-box').addEventListener('input', (e) => {
-  const query = e.target.value.toLowerCase().trim();
-  const filtered = bttvEmotes.filter(emote => 
-    emote.code.toLowerCase().includes(query)
-  );
-  renderEmotes(filtered);
-});
-
-// Source tab handling
-document.querySelectorAll('.source-tab').forEach(tab => {
-  tab.addEventListener('click', (e) => {
-    document.querySelectorAll('.source-tab').forEach(t => t.classList.remove('active'));
-    e.target.classList.add('active');
-    currentSource = e.target.dataset.source;
-    renderEmotes(bttvEmotes);
-  });
-});
-
-// Initialize on load with logging
-console.log('Script loaded, waiting for DOMContentLoaded...');
-document.addEventListener('DOMContentLoaded', () => {
-  console.log('DOM loaded, fetching emotes...');
-  fetchEmotes().catch(err => {
-    console.error('Initial fetch failed:', err);
-  });
+// Add single initialization point
+document.addEventListener('DOMContentLoaded', async () => {
+  console.log('Loading emotes...');
+  try {
+    const [bttvData, emojiggData] = await Promise.all([
+      loadBTTVEmotes(),
+      loadEmojiGGEmotes()
+    ]);
+    
+    bttvEmotes = [...bttvData, ...emojiggData];
+    console.log('Total emotes loaded:', bttvEmotes.length);
+    
+    if (bttvEmotes.length > 0) {
+      renderEmotes(bttvEmotes);
+      
+      // Add search handler
+      document.querySelector('.search-box').addEventListener('input', (e) => {
+        const query = e.target.value.toLowerCase().trim();
+        const filtered = bttvEmotes.filter(emote => 
+          emote.code.toLowerCase().includes(query)
+        );
+        renderEmotes(filtered);
+      });
+      
+      // Add source tab handling
+      document.querySelectorAll('.source-tab').forEach(tab => {
+        tab.addEventListener('click', (e) => {
+          document.querySelectorAll('.source-tab').forEach(t => t.classList.remove('active'));
+          e.target.classList.add('active');
+          currentSource = e.target.dataset.source;
+          renderEmotes(bttvEmotes);
+        });
+      });
+    } else {
+      document.querySelector('.emote-grid').innerHTML = 'Failed to load emotes :(';
+    }
+  } catch (error) {
+    console.error('Failed to load emotes:', error);
+    document.querySelector('.emote-grid').innerHTML = 'Failed to load emotes :(';
+  }
 });
