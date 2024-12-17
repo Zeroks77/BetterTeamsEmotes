@@ -1,0 +1,17 @@
+{
+  "manifest_version": 3,
+  "name": "BetterTeams Emotes",
+  "version": "1.0",
+  "description": "Use BetterTTV emotes in Microsoft Teams",
+  "permissions": [
+    "clipboardWrite"
+  ],
+  "host_permissions": [
+    "https://api.betterttv.net/*",
+    "https://cdn.betterttv.net/*",
+    "https://emoji.gg/*"
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  }
+}

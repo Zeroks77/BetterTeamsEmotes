@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      width: 300px;
+      padding: 10px;
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    }
+    
+    .search-box {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    
+    .emote-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+    
+    .emote {
+      cursor: pointer;
+      padding: 4px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.2s;
+    }
+    
+    .emote:hover {
+      background-color: #f0f0f0;
+    }
+    
+    .copy-notice {
+      position: fixed;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #4CAF50;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 4px;
+      display: none;
+      animation: fadeIn 0.3s;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    .source-tabs {
+      display: flex;
+      margin-bottom: 10px;
+      border-bottom: 1px solid #ddd;
+    }
+    
+    .source-tab {
+      padding: 8px 16px;
+      cursor: pointer;
+      border: none;
+      background: none;
+      color: #666;
+    }
+    
+    .source-tab.active {
+      color: #464EB8;
+      border-bottom: 2px solid #464EB8;
+    }
+    
+    .source-badge {
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      font-size: 8px;
+      padding: 2px 4px;
+      border-radius: 3px;
+      background: rgba(0,0,0,0.5);
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="source-tabs">
+    <button class="source-tab active" data-source="all">All</button>
+    <button class="source-tab" data-source="bttv">BTTV</button>
+    <button class="source-tab" data-source="emojigg">Emoji.gg</button>
+  </div>
+  <input type="text" class="search-box" placeholder="Search emotes...">
+  <div class="emote-grid">Loading emotes...</div>
+  <div class="copy-notice"></div>
+  <script src="popup.js"></script>
+</body>
+</html>

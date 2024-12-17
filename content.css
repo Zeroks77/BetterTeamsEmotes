@@ -1,0 +1,141 @@
+.bttv-emote-container {
+  position: relative;
+  z-index: 1000;
+  background: white;
+  padding: 8px;
+  border-top: 1px solid #e0e0e0;
+  margin-top: 8px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Add debug outline for visibility during development */
+.bttv-emote-container * {
+  border: 1px solid rgba(0,0,255,0.1);
+}
+
+.bttv-emote-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 8px;
+  padding: 12px;
+  overflow-y: auto;
+  max-height: 300px;
+  box-sizing: border-box;
+}
+
+.bttv-emote {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 4px;
+  padding: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.bttv-emote:hover {
+  background-color: #f0f0f0;
+}
+
+.bttv-header {
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #424242;
+}
+
+.bttv-category-tab {
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: rgb(96, 94, 92);
+  font-size: 14px;
+}
+
+.bttv-category-tab:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+.bttv-category-tab.active {
+  border-bottom: 2px solid rgb(98, 100, 167);
+  color: rgb(98, 100, 167);
+}
+
+.bttv-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100px;
+  color: rgb(96, 94, 92);
+}
+
+/* Remove floating button styles and keep only popup styles */
+.bttv-popup {
+  position: fixed;
+  width: 300px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  z-index: 10000;
+}
+
+.bttv-popup.left {
+  left: 20px;
+  right: auto;
+}
+
+.bttv-popup.right {
+  right: 20px;
+  left: auto;
+}
+
+.bttv-popup-header {
+  display: flex;
+  padding: 8px;
+  border-bottom: 1px solid #eee;
+}
+
+.bttv-search {
+  flex: 1;
+  padding: 6px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-right: 8px;
+}
+
+.bttv-close {
+  border: none;
+  background: none;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 0 8px;
+}
+
+.bttv-overlay-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+.bttv-emote-preview {
+  position: absolute;
+  background: white;
+  padding: 4px;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  animation: fadeOut 1s ease-out;
+  pointer-events: none;
+}
+
+@keyframes fadeOut {
+  0% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-20px); }
+}
