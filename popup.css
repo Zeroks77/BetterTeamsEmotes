@@ -1,0 +1,11 @@
+.source-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.source-tab {
+  padding: 6px 12px;
+  font-size: 12px;
+}

@@ -5,12 +5,25 @@
   "description": "Use BetterTTV emotes in Microsoft Teams",
   "permissions": [
     "clipboardWrite",
-    "clipboardRead"
+    "clipboardRead",
+    "scripting",
+    "storage" 
   ],
   "host_permissions": [
     "https://api.betterttv.net/*",
     "https://cdn.betterttv.net/*",
-    "https://emoji.gg/*"
+    "https://betterttv.com/*",
+    "https://discordemoji.com/*",
+    "https://*.discordemoji.com/*",
+    "https://emoji.gg/*",
+    "https://*.emoji.gg/*",
+    "https://cdn.emoji.gg/*",
+    "https://api.twitch.tv/*",
+    "https://api.frankerfacez.com/*",
+    "https://*.frankerfacez.com/*",
+    "https://7tv.io/*",
+    "https://api.7tv.app/*",
+    "https://cdn.7tv.app/*"
   ],
   "action": {
     "default_popup": "popup.html"

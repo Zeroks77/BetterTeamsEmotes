@@ -10,30 +10,49 @@
     }
     
     .search-box {
+      position: sticky;
+      top: 0;
+      z-index: 2;
       width: 100%;
       padding: 8px;
       margin-bottom: 10px;
       border: 1px solid #ddd;
       border-radius: 4px;
       box-sizing: border-box;
+      background: white;
     }
     
     .emote-grid {
+      position: relative;
+      height: 400px;
+      overflow-y: auto; /* Enable scrolling on grid itself */
+      padding-right: 8px; /* Add space for scrollbar */
+    }
+    
+    .virtual-scroll {
+      position: relative; /* Change from absolute to relative */
       display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 8px;
-      max-height: 400px;
-      overflow-y: auto;
+      grid-template-columns: repeat(10, 1fr);
+      gap: 2px;
+      padding: 2px;
     }
     
     .emote {
       cursor: pointer;
-      padding: 4px;
-      border-radius: 4px;
+      padding: 1px;
+      border-radius: 1px;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: background-color 0.2s;
+      min-width: 0;
+      min-height: 0;
+      position: relative;
+    }
+
+    .emote img {
+      max-width: 100%;
+      height: 24px;
+      object-fit: contain;
     }
     
     .emote:hover {
@@ -57,46 +76,32 @@
       from { opacity: 0; }
       to { opacity: 1; }
     }
-    
-    .source-tabs {
-      display: flex;
-      margin-bottom: 10px;
-      border-bottom: 1px solid #ddd;
+
+    /* Customize scrollbar */
+    .emote-grid::-webkit-scrollbar {
+      width: 8px;
     }
     
-    .source-tab {
-      padding: 8px 16px;
-      cursor: pointer;
-      border: none;
-      background: none;
-      color: #666;
+    .emote-grid::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 4px;
     }
     
-    .source-tab.active {
-      color: #464EB8;
-      border-bottom: 2px solid #464EB8;
+    .emote-grid::-webkit-scrollbar-thumb {
+      background: #888;
+      border-radius: 4px;
     }
     
-    .source-badge {
-      position: absolute;
-      top: 2px;
-      right: 2px;
-      font-size: 8px;
-      padding: 2px 4px;
-      border-radius: 3px;
-      background: rgba(0,0,0,0.5);
-      color: white;
+    .emote-grid::-webkit-scrollbar-thumb:hover {
+      background: #555;
     }
   </style>
 </head>
 <body>
-  <div class="source-tabs">
-    <button class="source-tab active" data-source="all">All</button>
-    <button class="source-tab" data-source="bttv">BTTV</button>
-    <button class="source-tab" data-source="emojigg">Emoji.gg</button>
-  </div>
   <input type="text" class="search-box" placeholder="Search emotes...">
-  <div class="emote-grid">Loading emotes...</div>
+  <div class="emote-grid">
+    <div class="virtual-scroll">Loading emotes...</div>
+  </div>
   <div class="copy-notice"></div>
   <script src="popup.js"></script>
 </body>

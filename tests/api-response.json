@@ -1,0 +1,15 @@
+{
+  "bttv": {
+    "global": "https://api.betterttv.net/3/cached/emotes/global",
+    "shared": "https://api.betterttv.net/3/emotes/shared/top?offset=0&limit=500",
+    "trending": "https://api.betterttv.net/3/emotes/shared/trending?offset=0&limit=500"
+  },
+  "emojigg": {
+    "all": "https://emoji.gg/api"
+  },
+  "notes": [
+    "Use these endpoints for testing",
+    "All endpoints support JSON responses",
+    "BTTV endpoints support pagination"
+  ]
+}
