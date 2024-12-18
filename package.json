@@ -12,6 +12,15 @@
   },
   "jest": {
     "testEnvironment": "jsdom",
-    "setupFiles": ["./tests/setup.js"]
-  }
+    "setupFiles": [
+      "./tests/setup.js"
+    ]
+  },
+  "main": "background.js",
+  "directories": {
+    "test": "tests"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }

@@ -3,12 +3,37 @@
   "name": "BetterTeams Emotes",
   "version": "1.0",
   "description": "Use BetterTTV emotes in Microsoft Teams",
+  
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "betterteams@example.com",
+      "strict_min_version": "109.0"
+    }
+  },
+
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+
   "permissions": [
     "clipboardWrite",
     "clipboardRead",
-    "scripting",
-    "storage" 
+    "storage"
   ],
+
   "host_permissions": [
     "https://api.betterttv.net/*",
     "https://cdn.betterttv.net/*",
@@ -24,8 +49,5 @@
     "https://7tv.io/*",
     "https://api.7tv.app/*",
     "https://cdn.7tv.app/*"
-  ],
-  "action": {
-    "default_popup": "popup.html"
-  }
+  ]
 }
